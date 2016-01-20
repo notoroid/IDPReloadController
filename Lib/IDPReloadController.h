@@ -16,7 +16,10 @@
 
 - (void) constructReloadControllerWithView:(UIView *)view topLayoutGuide:(id<UILayoutSupport>)topLayoutGuide hidden:(BOOL)hidden;
 - (void) showWithView:(UIView *)view completion:(void (^)(void))completion;
+- (void) showWithView:(UIView *)view animated:(BOOL)animated;
 - (void) hideWithView:(UIView *)view completion:(void (^)(void))completion;
+- (void) hideWithView:(UIView *)view animated:(BOOL)animated;
+
 
 // ScrollSupport
 - (void) setVerticalOffset:(CGFloat)verticalOffset; // scrollViewDidScroll:

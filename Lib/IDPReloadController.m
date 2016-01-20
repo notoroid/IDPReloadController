@@ -1,6 +1,6 @@
 //
 //  IDPReloadController.m
-//  CollectionViewTest3
+//  IDPReloadController
 //
 //  Created by 能登 要 on 2016/01/20.
 //  Copyright © 2016年 Irimasu Densan Planning. All rights reserved.
@@ -156,40 +156,76 @@
     }
 }
 
-- (void) showWithView:(UIView *)view completion:(void (^ __nullable)(void))completion
+- (void) showWithView:(UIView *)view animated:(BOOL)animated completion:(void (^ __nullable)(void))completion
 {
     [view setNeedsUpdateConstraints];
     
-    _hidden = NO;
-    
-    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _moreReadTopConstraint.constant = _originalMoreReadTopConstraint;
-        _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _originalMaskTopConstraint);
+    if( _hidden != NO ){
+        _hidden = NO;
         
-        [view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if( completion != nil ){
-            completion();
+        void (^animations)(void) = ^{
+            _moreReadTopConstraint.constant = _originalMoreReadTopConstraint;
+            _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _originalMaskTopConstraint);
+            
+            [view layoutIfNeeded];
+        };
+        
+        if( animated ){
+            [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:animations completion:^(BOOL finished) {
+                if( completion != nil ){
+                    completion();
+                }
+            }];
+        }else{
+            animations();
         }
-    }];
+    }
+}
+
+- (void) showWithView:(UIView *)view completion:(void (^ __nullable)(void))completion
+{
+    [self showWithView:view animated:YES completion:completion];
+}
+
+- (void) showWithView:(UIView *)view animated:(BOOL)animated
+{
+    [self showWithView:view animated:NO completion:nil];
+}
+
+- (void) hideWithView:(UIView *)view animated:(BOOL)animated completion:(void (^ __nullable)(void))completion
+{
+    [view setNeedsUpdateConstraints];
+    
+    if( _hidden != YES ){
+        _hidden = YES;
+        
+        void (^animations)(void) = ^{
+            _moreReadTopConstraint.constant = _hiddenMoreReadTopConstraint;
+            _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _hiddenMaskTopConstraint);
+            
+            [view layoutIfNeeded];
+        };
+        
+        if( animated ){
+            [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:animations completion:^(BOOL finished) {
+                if( completion != nil ){
+                    completion();
+                }
+            }];
+        }else{
+            animations();
+        }
+    }
 }
 
 - (void) hideWithView:(UIView *)view completion:(void (^ __nullable)(void))completion
 {
-    [view setNeedsUpdateConstraints];
-    
-    _hidden = YES;
-    
-    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _moreReadTopConstraint.constant = _hiddenMoreReadTopConstraint;
-        _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _hiddenMaskTopConstraint);
+    [self hideWithView:view animated:YES completion:completion];
+}
 
-        [view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if( completion != nil ){
-            completion();
-        }
-    }];
+- (void) hideWithView:(UIView *)view animated:(BOOL)animated
+{
+    [self hideWithView:view animated:NO completion:nil];
 }
 
 
