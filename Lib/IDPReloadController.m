@@ -133,8 +133,8 @@
     if( _hidden != YES ){
         
         [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            _moreReadTopConstraint.constant = _originalMoreReadTopConstraint;
-            _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.25, _originalMaskTopConstraint);
+            self->_moreReadTopConstraint.constant = self->_originalMoreReadTopConstraint;
+            self->_reloadView.maskView.center = CGPointMake(CGRectGetWidth(self->_reloadView.frame) * 0.25, self->_originalMaskTopConstraint);
             
             [view layoutIfNeeded];
         } completion:^(BOOL finished) {
@@ -164,8 +164,8 @@
         _hidden = NO;
         
         void (^animations)(void) = ^{
-            _moreReadTopConstraint.constant = _originalMoreReadTopConstraint;
-            _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _originalMaskTopConstraint);
+            self->_moreReadTopConstraint.constant = self->_originalMoreReadTopConstraint;
+            self->_reloadView.maskView.center = CGPointMake(CGRectGetWidth(self->_reloadView.frame) * 0.5, self->_originalMaskTopConstraint);
             
             [view layoutIfNeeded];
         };
@@ -200,8 +200,8 @@
         _hidden = YES;
         
         void (^animations)(void) = ^{
-            _moreReadTopConstraint.constant = _hiddenMoreReadTopConstraint;
-            _reloadView.maskView.center = CGPointMake(CGRectGetWidth(_reloadView.frame) * 0.5, _hiddenMaskTopConstraint);
+            self->_moreReadTopConstraint.constant = self->_hiddenMoreReadTopConstraint;
+            self->_reloadView.maskView.center = CGPointMake(CGRectGetWidth(self->_reloadView.frame) * 0.5, self->_hiddenMaskTopConstraint);
             
             [view layoutIfNeeded];
         };

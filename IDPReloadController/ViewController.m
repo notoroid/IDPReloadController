@@ -62,7 +62,7 @@
 - (IBAction)onMoreRead:(id)sender
 {
     [_reloadCntroller hideWithView:self.view completion:^{
-        _reloadCntroller.reloadView.alpha = 1.0;
+        self->_reloadCntroller.reloadView.alpha = 1.0;
         
     }];
 }
